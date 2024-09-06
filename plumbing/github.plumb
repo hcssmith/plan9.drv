@@ -10,6 +10,16 @@ plumb to web
 plumb start web https://github.com/$1/$2/tree/$3
 
 type is text
+data matches 'github:(.*)/(.*)/(.*)"'
+plumb to web
+plumb start web https://github.com/$1/$2/tree/$3
+
+type is text
+data matches 'github:(.*)/(.*)/(.*)'
+plumb to web
+plumb start web https://github.com/$1/$2/tree/$3
+
+type is text
 data matches 'github:(.*)/(.*)"'
 plumb to web
 plumb start web https://github.com/$1/$2
