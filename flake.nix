@@ -17,7 +17,8 @@
       name = "plan9";
       drv = pkgs: let
         f = pkgs.callPackage ./find {};
-        a = pkgs.callPackage ./acme {};
+        acme = pkgs.callPackage ./acme {};
+        plumbing = pkgs.callPackage ./plumbing {};
       in
         pkgs.stdenv.mkDerivation (fAttrs: {
           pname = name;
@@ -29,8 +30,10 @@
           src = ./.;
           installPhase = ''
             mkdir -p $out/bin
+            mkdir -p $out/lib
             cp ${f}/bin/f $out/bin/f
-            cp ${a}/bin/a $out/bin/a
+            cp ${acme}/bin/acme $out/bin/acme
+						cp ${plumbing} $out/lib/plumbing
           '';
         });
     };
