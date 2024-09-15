@@ -19,6 +19,7 @@
         f = pkgs.callPackage ./find {};
         acme = pkgs.callPackage ./acme {};
         plumbing = pkgs.callPackage ./plumbing {};
+        build = pkgs.callPackage ./Build {};
       in
         pkgs.stdenv.mkDerivation (fAttrs: {
           pname = name;
@@ -33,7 +34,8 @@
             mkdir -p $out/lib
             cp ${f}/bin/f $out/bin/f
             cp ${acme}/bin/acme $out/bin/acme
-						cp ${plumbing} $out/lib/plumbing
+            cp ${build}/bin/Build $out/bin/Build
+            cp ${plumbing} $out/lib/plumbing
           '';
         });
     };
