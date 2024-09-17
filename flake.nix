@@ -20,6 +20,8 @@
         acme = pkgs.callPackage ./acme {};
         plumbing = pkgs.callPackage ./plumbing {};
         build = pkgs.callPackage ./Build {};
+        tags = pkgs.callPackage ./Tags {};
+        ctl = pkgs.callPackage ./Ctl {};
       in
         pkgs.stdenv.mkDerivation (fAttrs: {
           pname = name;
@@ -35,6 +37,8 @@
             cp ${f}/bin/f $out/bin/f
             cp ${acme}/bin/acme $out/bin/acme
             cp ${build}/bin/Build $out/bin/Build
+            cp ${tags}/bin/Tags $out/bin/Tags
+            cp ${ctl}/bin/Ctl $out/bin/Ctl
             cp ${plumbing} $out/lib/plumbing
           '';
         });
