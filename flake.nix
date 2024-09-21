@@ -20,8 +20,11 @@
         acme = pkgs.callPackage ./acme {};
         plumbing = pkgs.callPackage ./plumbing {};
         build = pkgs.callPackage ./Build {};
-        tags = pkgs.callPackage ./Tags {};
-        ctl = pkgs.callPackage ./Ctl {};
+        write = pkgs.callPackage ./Write {};
+        tags = pkgs.callPackage ./Tags+ {};
+        tagsall = pkgs.callPackage ./TagsAll {};
+        getwindata = pkgs.callPackage ./GetWinData {};
+        getallwinids = pkgs.callPackage ./GetAllWinIDs {};
       in
         pkgs.stdenv.mkDerivation (fAttrs: {
           pname = name;
@@ -37,8 +40,11 @@
             cp ${f}/bin/f $out/bin/f
             cp ${acme}/bin/acme $out/bin/acme
             cp ${build}/bin/Build $out/bin/Build
-            cp ${tags}/bin/Tags $out/bin/Tags
-            cp ${ctl}/bin/Ctl $out/bin/Ctl
+            cp ${write}/bin/Write $out/bin/Write
+            cp ${tags}/bin/Tags+ $out/bin/Tags+
+            cp ${tagsall}/bin/TagsAll $out/bin/TagsAll
+            cp ${getwindata}/bin/GetWinData $out/bin/GetWinData
+            cp ${getallwinids}/bin/GetAllWinIDs $out/bin/GetAllWinIDs
             cp ${plumbing} $out/lib/plumbing
           '';
         });
