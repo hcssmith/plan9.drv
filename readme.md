@@ -39,3 +39,8 @@ nix => nix run
 
 ## Fmt
 call correct formatter on file
+
+## Git
+Launch a text window, attach to event,
+provide UI for git allow commit, staging, push, pull, branch
+read from acme/$id/event to intercept plumber. May need to be made in a proper language not nushell. Maybe try crystal lang

@@ -3,7 +3,7 @@
   shell = "${pkgs.plan9port}/plan9/bin/rc";
   browser = "firefox";
   font = "CMUTypewriter-Regular";
-  size = "22a";
+  size = "20a";
 in
   pkgs.writeScriptBin "acme"
   ''

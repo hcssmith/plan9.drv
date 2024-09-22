@@ -10,8 +10,16 @@ def main [
 	filename: string, # control file to write to.
 	...data: string, # data to write to the file
 	--id (-i): int, # id to use defaults to $winid env variable
+	--new (-n) # write to new acme window
 ] {
-	let winid = if ($id | is-empty) {$env.winid} else {$id}
+	let winid = if ($id | is-empty) {
+		if $new {
+			"new"} else {
+			$env.winid
+		}
+	} else {
+			$id
+	}
 	let argdata = if ($data | is-empty) {""} else {$data | str join ' '}
 	$argdata | ${p9p} write $'acme/($winid)/($filename)'
 }
