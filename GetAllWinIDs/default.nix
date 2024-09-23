@@ -18,7 +18,7 @@ def main [
 	if $exclude_psuedo_windows {
 		return ($ids | each {|it|
 			let name = ${getwindata} --id $it.id | from json | get name | str trim
-			if ($name | str ends-with '+Errors') or ($name | str ends-with '+Messages') {null} else {$it}
+			if ($name | path basename | str starts-with '+') {null} else {$it}
 		} | to json)
 		} else {
 		return ($ids | to json)
