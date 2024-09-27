@@ -29,7 +29,6 @@
       			(callPackage ./GetWinData {})
       			(callPackage ./GetAllWinIDs {})
       			(callPackage ./Exec {})
-      			(callPackage ./Fmt {})
       		];
       	};
     };
