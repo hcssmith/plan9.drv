@@ -33,7 +33,7 @@ runs `Write ctl put -i id` on all dirty files.
 detect project type and build i.e.
 nix => nix build
 
-## Run
+## Run DONE
 runs Build in dir then run based on project type i.e.
 nix => nix run
 

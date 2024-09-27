@@ -41,6 +41,5 @@ def --wrapped main [
 
 	^$"($program)" ...$args e+o>| each {|it| ${write} -i ...$id body $it} | ignore
 	${write} -i ...$id ctl clean
-	#nn
 	}
 ''
