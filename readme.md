@@ -25,7 +25,7 @@ write default tags to window based on directory or file.
 run Tags+ for all windows
 
 
-## Exec
+## Exec DONE
 Run command, redirect all output to global +Messages window.
 
 ## Build DONE
@@ -44,3 +44,4 @@ call correct formatter on file
 Launch a text window, attach to event,
 provide UI for git allow commit, staging, push, pull, branch
 read from acme/$id/event to intercept plumber. May need to be made in a proper language not nushell. Maybe try crystal lang
+Use external program - write in odin - libs needed, 9p + acme, copy the go libs

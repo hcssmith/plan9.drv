@@ -2,9 +2,11 @@
 	gaw = pkgs.callPackage ../GetAllWinIDs {};
 	gwd = pkgs.callPackage ../GetWinData {};
 	w = pkgs.callPackage ../Write {};
+	e = pkgs.callPackage ../Exec {};
 	getallids = "${gaw}/bin/GetAllWinIDs";
 	getwindata = "${gwd}/bin/GetWinData";
 	write = "${w}/bin/Write";
+	exec = "${e}/bin/Exec";
 in pkgs.writeScriptBin "Build"
 ''
 #!${pkgs.nushell}/bin/nu
@@ -21,7 +23,7 @@ def main [] {
 	}
 	| ignore
 	if ('./flake.nix' | path exists) {
-		nix build .
+		${exec} nix build .
 		exit
 	}
 }

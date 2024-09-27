@@ -25,6 +25,7 @@
         tagsall = pkgs.callPackage ./TagsAll {};
         getwindata = pkgs.callPackage ./GetWinData {};
         getallwinids = pkgs.callPackage ./GetAllWinIDs {};
+        exec = pkgs.callPackage ./Exec {};
       in
         pkgs.stdenv.mkDerivation (fAttrs: {
           pname = name;
@@ -45,6 +46,7 @@
             cp ${tagsall}/bin/TagsAll $out/bin/TagsAll
             cp ${getwindata}/bin/GetWinData $out/bin/GetWinData
             cp ${getallwinids}/bin/GetAllWinIDs $out/bin/GetAllWinIDs
+            cp ${exec}/bin/Exec $out/bin/Exec
             cp ${plumbing} $out/lib/plumbing
           '';
         });
