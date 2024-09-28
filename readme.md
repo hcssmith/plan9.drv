@@ -37,8 +37,8 @@ nix => nix build
 runs Build in dir then run based on project type i.e.
 nix => nix run
 
-## Fmt
-call correct formatter on file
+## Fmt DONE
+call correct formatter on file or dir
 
 ## Git
 Launch a text window, attach to event,
