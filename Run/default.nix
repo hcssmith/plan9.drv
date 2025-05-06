@@ -1,17 +1,8 @@
-{pkgs, ...}: let
-  e = pkgs.callPackage ../Exec {};
-  b = pkgs.callPackage ../Build {};
-  exec = "${e}/bin/Exec";
-  build = "${b}/bin/Build";
-in
-  pkgs.writeScriptBin "Run"
-  ''
-    #!${pkgs.nushell}/bin/nu
-    	def main [] {
-    	${build}
-    	if ('./flake.nix' | path exists) {
-    		${exec} nix run .
-    		exit
-    	}
-    }
-  ''
+{pkgs, util}: util.builders.writeNushellScript {
+  	name = "Run";
+  	packageMap = with pkgs; [
+  		{ exe = "Exec"; path = callPackage ../Exec {inherit pkgs util;};}
+  		{ exe = "Build"; path = callPackage ../Build {inherit pkgs util;};}
+  	];
+  	text = builtins.readFile ./run.nu;
+}

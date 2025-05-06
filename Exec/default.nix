@@ -1,47 +1,46 @@
-{pkgs, ...}: let
-  gaw = pkgs.callPackage ../GetAllWinIDs {};
-  gwd = pkgs.callPackage ../GetWinData {};
-  w = pkgs.callPackage ../Write {};
-  getallwinids = "${gaw}/bin/GetAllWinIDs";
-  getwindata = "${gwd}/bin/GetWinData";
-  write = "${w}/bin/Write";
-  p9p = "${pkgs.plan9port}/bin/9 9p";
-in
-  pkgs.writeScriptBin "Exec"
-  ''
-    #!${pkgs.nushell}/bin/nu
-
+{pkgs, util}: util.builders.writeNushellScript {
+  	name = "Exec";
+  	packageMap = with pkgs; [
+  		{exe = "GetAllWinIDs"; path = callPackage ../GetAllWinIDs {inherit pkgs util;}; }
+  		{exe = "GetWinData"; path = callPackage ../GetWinData {inherit pkgs util;};}
+  		{exe = "Write"; path = callPackage ../Write {inherit pkgs util;};}
+  	];
+  	text = ''
     # Excute program, redirect all output to +Messages window
     def --wrapped main [
     	program:string
     	...args:string
+    	--dir (-d): string
     ] {
     	# find if +Messages exists
     	mut msg_id = 0
-    	$msg_id = (${getallwinids}
+    	let fixed_dir = if ($dir | str ends-with "/") {$dir} else { $dir + "/" }
+    	let win_name = if ($dir | is-empty) {"+Messages"} else { $fixed_dir + "+Messages"}
+    	$msg_id = (GetAllWinIDs
     		| from json
     		| each {|it|
-    			if ((${getwindata} --id $it.id
+    			if ((GetWinData --id $it.id
     					| from json
-    					| get name) == "+Messages") {$it.id}
+    					| get name) == $win_name) {$it.id}
     			} )
     	if ($msg_id | is-empty) {
     		# create new window, set name to
-    		${write} -n ctl "name +Messages\n"
-    		$msg_id = (${getallwinids}
+    		let control = "name " + $win_name + "\n"
+    		Write -n ctl $control
+    		$msg_id = (GetAllWinIDs
     			| from json
     			| each {|it|
-    				if ((${getwindata} --id $it.id
+    				if ((GetWinData --id $it.id
     					| from json
-    					| get name) == "+Messages") {$it.id}
+    					| get name) == $win_name) {$it.id}
     				})
     	}
     	let id = $msg_id
 
-    	let cmd = ($'($program) ' | append ($args | str join ' ') | str join ' ')
-
-    	^$"($program)" ...$args e+o>| each {|it| ${write} -i ...$id body $it} | ignore
-    	${write} -i ...$id ctl clean
-    	${write} -i ...$id ctl show
+    	^$"($program)" ...$args e+o>| lines | each {|it|
+    		Write -N -i ...$id body ($it | str trim) } | ignore
+    	Write -i ...$id ctl clean
+    	Write -i ...$id ctl show
     	}
-  ''
+  '';
+  }
