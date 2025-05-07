@@ -15,7 +15,9 @@
     	# find if +Messages exists
     	mut msg_id = 0
     	let fixed_dir = if ($dir | str ends-with "/") {$dir} else { $dir + "/" }
-    	let win_name = if ($dir | is-empty) {"+Messages"} else { $fixed_dir + "+Messages"}
+    	let win_name = if ($dir | is-empty)
+    		{"+Messages"} else
+    		{ (if ($dir | str ends-with "/") {$dir} else { $dir + "/" }) + "+Messages"}
     	$msg_id = (GetAllWinIDs
     		| from json
     		| each {|it|
