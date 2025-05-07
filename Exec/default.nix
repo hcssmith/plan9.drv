@@ -14,7 +14,6 @@
     ] {
     	# find if +Messages exists
     	mut msg_id = 0
-    	let fixed_dir = if ($dir | str ends-with "/") {$dir} else { $dir + "/" }
     	let win_name = if ($dir | is-empty) {
     		"+Messages"} else {
     		(if ($dir | str ends-with "/") {$dir} else { $dir + "/" }) + "+Messages"}
